@@ -11,6 +11,7 @@ import scrapy
 class HupuSpiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    collection = 'user'
     name = scrapy.Field()
     gender = scrapy.Field()
     address = scrapy.Field()
@@ -19,6 +20,6 @@ class HupuSpiderItem(scrapy.Item):
     level = scrapy.Field()
     online_time = scrapy.Field()
     join_date = scrapy.Field()
+    uid = scrapy.Field()
 
-    BOT_NAME = 'hupu_spider'
 

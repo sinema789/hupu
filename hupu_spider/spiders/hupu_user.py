@@ -33,6 +33,8 @@ class HupuUserSpider(CrawlSpider):
         item = HupuSpiderItem()
         # 用户名
         name = response.xpath('//div[@itemprop="name"]/text()').extract_first()
+        # uid
+        uid = response.xpath('//img[@id="j_head"]/@uid').extract_first()
         # 性别
         gender = response.xpath('//span[@itemprop="gender"]/text()').extract_first()
         # 所在地
@@ -79,9 +81,17 @@ class HupuUserSpider(CrawlSpider):
             item['gender'] = '无'
 
         if address is not None:
-            item['address'] = address[:3].strip()
+            if address[::2].strip() in ['西藏', '宁夏', '新疆', '香港', '澳门']:
+                item['address'] = address[:2].strip()
+            else:
+                item['address'] = address[:3].strip()
 
         if team is not None:
             item['team'] = team
 
-        item['name'] = name
+        if name is not None:
+            item['name'] = name
+        if uid is not None:
+            item['uid'] = int(uid)
+
+        yield item
