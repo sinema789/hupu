@@ -4,17 +4,19 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 import re
 import sys
-
+from scrapy_redis.spiders import RedisCrawlSpider
 from hupu_spider.items import HupuSpiderItem
 
 
-class HupuUserSpider(CrawlSpider):
+class HupuUserSpider(RedisCrawlSpider):
     print(sys.path)
     name = 'hupu_user'
     allowed_domains = ['hupu.com']
-    base_url = 'https://my.hupu.com/{}'
-    start_url = ['zhangjiawei', '91700603242537', '176192780288726', 'linshuhao', 'Tracy_Mcgrady', '7963307555404',
-                 'SmithKobe', '194086995549379']
+    start_url = ['https://my.hupu.com/zhangjiawei', 'https://my.hupu.com/91700603242537',
+                 'https://my.hupu.com/176192780288726', 'https://my.hupu.com/linshuhao',
+                 'https://my.hupu.com/Tracy_Mcgrady', 'https://my.hupu.com/7963307555404',
+                 'https://my.hupu.com/SmithKobe', 'https://my.hupu.com/194086995549379']
+    redis_key = "hupu_user:start_urls"
 
     rules = (
         Rule(LinkExtractor(restrict_xpaths=('//div[@id="following"]/p/a',)), follow=True),
@@ -22,12 +24,6 @@ class HupuUserSpider(CrawlSpider):
              callback='parse_item', follow=False),
         Rule(LinkExtractor(restrict_xpaths=('//a[@class="next"]',)), follow=True)
     )
-
-    def start_requests(self):
-        for uid in self.start_url:
-            yield scrapy.Request(
-                self.base_url.format(uid)
-            )
 
     def parse_item(self, response):
         item = HupuSpiderItem()

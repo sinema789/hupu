@@ -160,3 +160,7 @@ def hello():
         host=REMOTE_HOST,
         script_list=page.get_js_dependencies()
     )
+
+
+if __name__ == '__main__':
+    app.run()

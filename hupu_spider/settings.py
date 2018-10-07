@@ -99,10 +99,10 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 # 2. 设置过滤类，实现去重功能
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 # 3. 配置redis连接信息
-REDIS_URL = "redis://@127.0.0.1:6379/1"
+REDIS_URL = "redis://@106.12.209.201:6379/1"
 # 4. 配置持久化
 SCHEDULER_PERSIST = True
 
 # 配置mongodb连接信息
-MONGO_URI = '127.0.0.1:27017'
-MONGO_DATABASE = 'hupu'
+MONGO_URI = '106.12.209.201:27017'
+MONGO_DATABASE = 'hupu01'
